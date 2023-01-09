@@ -22,6 +22,8 @@ const Input = () => {
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
+    if (!img && !text) return;
+    setText("");
     if (img) {
       const storageRef = ref(storage, uuid());
 
@@ -70,7 +72,6 @@ const Input = () => {
       [data.chatId + ".date"]: serverTimestamp(),
     });
 
-    setText("");
     setImg(null);
   };
   return (
@@ -82,6 +83,7 @@ const Input = () => {
         value={text}
       />
       <div className="send">
+        {img && <img src={URL.createObjectURL(img)} alt="" />}
         <img src={Attach} alt="" />
         <input
           type="file"
